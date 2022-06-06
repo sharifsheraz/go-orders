@@ -45,7 +45,7 @@ func (h handler) GetOrders(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var orders []models.Order
-	if result := withFilter.Find(&orders); result.Error != nil {
+	if result := withFilter.Order("created_at DESC").Find(&orders); result.Error != nil {
 		log.Print("Error::", result.Error)
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("500 - Something bad happened!"))
